@@ -1,0 +1,19 @@
+Liquidity describes how easily an asset can be traded in meaningful size without causing a large change in its price.
+
+A liquid market generally allows buyers and sellers to transact more easily, while a less liquid market may make execution more difficult.
+
+The bid-ask spread is the difference between the best available buying price and selling price.
+
+A wider bid-ask spread can increase the implicit cost of trading.
+
+Available liquidity at a given price may be limited.
+
+If an order is larger than the quantity available at the best quoted price, different parts of the order may execute at different prices.
+
+Large orders can therefore require access to liquidity across multiple price levels or trading venues.
+
+Market impact refers to the effect that executing an order can have on market prices.
+
+The relationship between order size, available liquidity, spread, market conditions, and execution strategy can influence execution quality.
+
+Liquidity should therefore be considered together with trade size, market conditions, and execution objectives rather than interpreted using a single metric.

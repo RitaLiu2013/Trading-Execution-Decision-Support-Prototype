@@ -1,0 +1,8 @@
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.5
+sentence-transformers>=3.0
+ollama>=0.4
+tabulate>=0.9
+pytest>=8.0
+jupyter>=1.0

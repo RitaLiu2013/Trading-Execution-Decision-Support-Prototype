@@ -1,0 +1,19 @@
+Execution risk is the risk that the actual implementation of a trading decision differs materially from the intended execution outcome.
+
+Execution outcomes can be affected by changes in market prices while an order is being executed.
+
+Limited liquidity can make it harder to execute the desired quantity at attractive prices.
+
+Large orders relative to available liquidity may face greater market impact or require execution across multiple prices.
+
+Higher market volatility can increase uncertainty around the prices available during execution.
+
+Execution delays can also affect the difference between the price observed when a trading decision is made and the prices eventually achieved.
+
+An order may also be only partially executed if sufficient liquidity is not available under the chosen execution conditions.
+
+Execution quality therefore cannot be evaluated only by asking whether an order was completed.
+
+Relevant analysis may include execution prices, benchmarks, trade size, liquidity conditions, timing, market impact, and whether the intended quantity was executed.
+
+Execution-risk analysis should support decision-making rather than automatically imply that one execution strategy is optimal in every situation.

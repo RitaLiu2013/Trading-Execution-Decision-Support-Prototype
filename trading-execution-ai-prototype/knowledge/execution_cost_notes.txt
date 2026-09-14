@@ -1,0 +1,17 @@
+Trading execution costs can include both explicit and implicit costs.
+
+Explicit costs are direct trading costs such as commissions, transaction taxes, exchange fees, and similar charges.
+
+Implicit trading costs can include the bid-ask spread, market impact, delay costs, and costs related to trades that are not completed.
+
+Implementation shortfall is a framework for measuring the total cost of implementing an investment decision.
+
+It compares the result of actual trading with a hypothetical portfolio in which the investment decision could be implemented at the price prevailing when the decision was made.
+
+The price prevailing around the time of the trading decision is often referred to as a decision price or arrival price.
+
+VWAP stands for Volume-Weighted Average Price.
+
+A VWAP-based transaction-cost estimate compares execution prices with average market prices during an execution period.
+
+Different execution benchmarks answer different questions, so no single benchmark should automatically be treated as appropriate for every trading objective.

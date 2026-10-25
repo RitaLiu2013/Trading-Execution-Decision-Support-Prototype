@@ -1,4 +1,4 @@
-# Trading Execution AI Prototype
+# Trading Execution Decision-Support Prototype
 
 A small, auditable decision-support prototype exploring how deterministic analytics and generative AI can work together in a trading-execution workflow.
 

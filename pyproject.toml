@@ -3,11 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "trading-execution-ai-prototype"
+name = "trading-execution-decision-support"
 version = "0.1.0"
-description = "Synthetic trading-execution analytics plus grounded RAG and deterministic routing."
-readme = "README.md"
-requires-python = ">=3.10"
+description = "Auditable trading-execution decision-support prototype combining deterministic analytics, data-quality controls, grounded RAG and evaluation."
 license = {text = "MIT"}
 authors = [{name = "Rita Liu"}]
 dependencies = [
@@ -23,7 +21,7 @@ dependencies = [
 dev = ["pytest>=8.0", "jupyter>=1.0"]
 
 [project.scripts]
-trading-ai = "trading_ai.cli:main"
+trading-execution = "trading_ai.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

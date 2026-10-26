@@ -1,4 +1,4 @@
-# Trading Execution AI Prototype
+# Trading Execution Decision-Support Prototype
 
 A small, auditable prototype that combines **deterministic trading-execution analytics**, **data-quality controls**, **grounded RAG**, and a **routing workflow** over a deliberately imperfect synthetic dataset.
 
@@ -135,15 +135,15 @@ pytest
 ### 4. Run fast deterministic evaluation
 
 ```bash
-trading-ai --evaluate
+trading-execution --evaluate
 ```
 
 ### 5. Ask data questions without an LLM
 
 ```bash
-trading-ai --no-llm -q "Which venue has the worst average execution slippage?"
-trading-ai --no-llm -q "Show the top 5 worst executions"
-trading-ai --no-llm -q "What data quality issues are present?"
+trading-execution --no-llm -q "Which venue has the worst average execution slippage?"
+trading-execution --no-llm -q "Show the top 5 worst executions"
+trading-execution --no-llm -q "What data quality issues are present?"
 ```
 
 ### 6. Enable the local LLM / RAG path
@@ -158,8 +158,8 @@ ollama run qwen3:4b-instruct
 Then, in another terminal:
 
 ```bash
-trading-ai -q "What is implementation shortfall?"
-trading-ai -q "Why can liquidity affect execution quality?"
+trading-execution -q "What is implementation shortfall?"
+trading-execution -q "Why can liquidity affect execution quality?"
 ```
 
 The first SentenceTransformer run may download the configured embedding model.

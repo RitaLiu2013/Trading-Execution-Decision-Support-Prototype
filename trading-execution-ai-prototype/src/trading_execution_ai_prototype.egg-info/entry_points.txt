@@ -1,2 +1,0 @@
-[console_scripts]
-trading-ai = trading_ai.cli:main

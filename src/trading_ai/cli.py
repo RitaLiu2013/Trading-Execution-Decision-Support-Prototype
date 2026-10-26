@@ -9,7 +9,7 @@ from .workflow import TradingAssistant
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Trading Execution AI Prototype")
+    parser = argparse.ArgumentParser(description="Trading Execution Decision-Support Prototype")
     parser.add_argument("--question", "-q", type=str, help="Ask one question")
     parser.add_argument("--no-llm", action="store_true", help="Do not use LLM explanations for data-tool outputs")
     parser.add_argument("--regenerate-data", action="store_true", help="Regenerate the synthetic CSV")

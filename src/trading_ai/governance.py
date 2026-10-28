@@ -29,7 +29,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
 
     total = len(df)
 
-    # 1. Trade ID completeness
     valid_trade_id = df["trade_id"].notna()
 
     add_check(
@@ -40,7 +39,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         1.00,
     )
 
-    # 2. Trade ID uniqueness
     unique_trade_id = ~df["trade_id"].duplicated(keep=False)
 
     add_check(
@@ -51,7 +49,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         1.00,
     )
 
-    # 3. Trade side validity
     normalized_side = (
         df["side"]
         .astype("string")
@@ -69,7 +66,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         1.00,
     )
 
-    # 4. Order quantity validity
     valid_order_qty = (
         df["order_qty"].notna()
         & (df["order_qty"] > 0)
@@ -83,7 +79,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         1.00,
     )
 
-    # 5. Executed quantity validity
     valid_executed_qty = (
         df["executed_qty"].notna()
         & (df["executed_qty"] >= 0)
@@ -98,7 +93,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         1.00,
     )
 
-    # 6. Arrival-price completeness and validity
     valid_arrival_price = (
         df["arrival_price"].notna()
         & (df["arrival_price"] > 0)
@@ -112,7 +106,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         0.99,
     )
 
-    # 7. VWAP-price completeness and validity
     valid_vwap_price = (
         df["vwap_price"].notna()
         & (df["vwap_price"] > 0)
@@ -126,7 +119,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         0.98,
     )
 
-    # 8. Venue validity
     valid_venue = (
         df["venue"].notna()
         & df["venue"].astype("string").str.strip().ne("")
@@ -140,7 +132,6 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
         0.99,
     )
 
-    # 9. Asset-class validity
     allowed_asset_classes = {
         "Equity",
         "Fixed Income",
@@ -160,3 +151,83 @@ def run_governance_checks(df: pd.DataFrame) -> pd.DataFrame:
     )
 
     return pd.DataFrame(checks)
+
+
+ISSUE_METADATA = {
+    ("trade_id", "Trade ID must be unique"): {
+        "severity": "High",
+        "data_owner_role": "Trading Operations",
+        "data_steward_role": "Markets Data Steward",
+        "issue_type": "Uniqueness",
+        "remediation_action": (
+            "Investigate duplicate records and determine whether the issue "
+            "originates from source data or record-processing logic."
+        ),
+    },
+    (
+        "executed_qty",
+        "Executed quantity must be between 0 and order quantity",
+    ): {
+        "severity": "High",
+        "data_owner_role": "Trading Operations",
+        "data_steward_role": "Markets Data Steward",
+        "issue_type": "Validity",
+        "remediation_action": (
+            "Investigate the affected trade and determine whether the issue "
+            "originates from source data or quantity-processing logic."
+        ),
+    },
+}
+
+
+def build_issue_register(
+    quality_report: pd.DataFrame,
+) -> pd.DataFrame:
+    failed_checks = quality_report[
+        quality_report["status"] == "FAIL"
+    ].copy()
+
+    issues = []
+
+    for issue_number, (_, row) in enumerate(
+        failed_checks.iterrows(),
+        start=1,
+    ):
+        key = (row["field"], row["rule"])
+
+        metadata = ISSUE_METADATA.get(
+            key,
+            {
+                "severity": "Medium",
+                "data_owner_role": "To be assigned",
+                "data_steward_role": "Markets Data Steward",
+                "issue_type": "Data Quality",
+                "remediation_action": (
+                    "Investigate the failed control and determine root cause."
+                ),
+            },
+        )
+
+        issues.append(
+            {
+                "issue_id": f"DQ-{issue_number:03d}",
+                "field": row["field"],
+                "rule": row["rule"],
+                "observed_pass_rate": row["pass_rate"],
+                "threshold": row["threshold"],
+                "severity": metadata["severity"],
+                "data_owner_role": metadata["data_owner_role"],
+                "data_steward_role": metadata["data_steward_role"],
+                "issue_type": metadata["issue_type"],
+                "root_cause": "To be investigated",
+                "status": "OPEN",
+                "remediation_action": metadata["remediation_action"],
+                "escalation_required": (
+                    "YES"
+                    if metadata["severity"] == "High"
+                    else "NO"
+                ),
+            }
+        )
+
+    return pd.DataFrame(issues)

@@ -266,3 +266,18 @@ control passes or fails.
 The purpose is not to reproduce an enterprise governance platform, but to
 demonstrate how critical Markets data can be defined, monitored and controlled
 in a transparent and auditable way.
+
+### Governance Issue Management
+
+Failed data-quality controls are converted into a lightweight governance
+issue register containing the affected field, control rule, observed pass
+rate, threshold, severity, illustrative ownership and stewardship roles,
+remediation action and escalation status.
+
+The workflow deliberately separates issue detection from root-cause
+confirmation. A failed control identifies an exception, while the actual
+root cause remains subject to investigation.
+
+This creates a simple end-to-end governance flow from Critical Data
+Attributes and quality rules to monitoring, issue ownership, remediation
+and escalation.

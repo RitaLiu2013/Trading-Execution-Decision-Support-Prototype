@@ -1,0 +1,3 @@
+issue_id,field,rule,observed_pass_rate,threshold,severity,data_owner_role,data_steward_role,issue_type,root_cause,status,remediation_action,escalation_required
+DQ-001,trade_id,Trade ID must be unique,0.9917,1.0,High,Trading Operations,Markets Data Steward,Uniqueness,To be investigated,OPEN,Investigate duplicate records and determine whether the issue originates from source data or record-processing logic.,YES
+DQ-002,executed_qty,Executed quantity must be between 0 and order quantity,0.9958,1.0,High,Trading Operations,Markets Data Steward,Validity,To be investigated,OPEN,Investigate the affected trade and determine whether the issue originates from source data or quantity-processing logic.,YES

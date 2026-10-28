@@ -1,9 +1,9 @@
-field_name,business_definition,criticality,quality_rule,threshold,example_owner
-trade_id,Unique identifier for each trade,Critical,Must be present and unique,100%,Trading Operations
-side,Direction of the trade,Critical,Must be BUY or SELL,100%,Trading
-order_qty,Original ordered quantity,Critical,Must be positive,100%,Trading
-executed_qty,Executed quantity,Critical,Must be between 0 and order quantity,100%,Trading Operations
-arrival_price,Market reference price at order arrival,Critical,Must be positive when execution slippage is calculated,99%,Market Data
-vwap_price,Volume-weighted average price benchmark,Important,Must be present and positive when required for benchmark analysis,98%,Market Data
-venue,Execution venue,Important,Must belong to approved venue list,99%,Trading Operations
-asset_class,Instrument asset class,Important,Must belong to approved asset-class list,100%,Product Data
+field_name,business_definition,business_process,criticality,data_owner_role,data_steward_role,source,downstream_use,quality_dimension,quality_rule,threshold,escalation_route
+trade_id,Unique identifier for each trade,Trade Processing,Critical,Trading Operations,Markets Data Steward,synthetic_trades.csv,Record identification and trade-level analysis,Completeness and Uniqueness,Must be present and unique,100%,Data Steward -> Data Owner
+side,Direction of the trade,Trade Execution,Critical,Trading,Markets Data Steward,synthetic_trades.csv,Signed execution-slippage calculation,Validity,Must resolve to BUY or SELL after normalisation,100%,Data Steward -> Data Owner
+order_qty,Original ordered quantity,Trade Execution,Critical,Trading,Markets Data Steward,synthetic_trades.csv,Fill-rate and execution-quality analysis,Validity,Must be present and positive,100%,Data Steward -> Data Owner
+executed_qty,Executed quantity,Trade Execution,Critical,Trading Operations,Markets Data Steward,synthetic_trades.csv,Fill-rate and partial-fill analysis,Validity,Must be between 0 and order quantity,100%,Data Steward -> Data Owner
+arrival_price,Market reference price at order arrival,Execution Benchmarking,Critical,Market Data,Markets Data Steward,synthetic_trades.csv,Signed arrival-slippage calculation,Completeness and Validity,Must be present and positive,99%,Data Steward -> Data Owner
+vwap_price,Volume-weighted average price benchmark,Execution Benchmarking,Important,Market Data,Markets Data Steward,synthetic_trades.csv,VWAP benchmark analysis,Completeness and Validity,Must be present and positive,98%,Data Steward -> Data Owner
+venue,Execution venue,Trade Execution,Important,Trading Operations,Markets Data Steward,synthetic_trades.csv,Venue-level execution analysis,Completeness,Must be present,99%,Data Steward -> Data Owner
+asset_class,Instrument asset class,Product Classification,Important,Product Data,Markets Data Steward,synthetic_trades.csv,Asset-class aggregation and analysis,Validity,Must belong to the approved asset-class list,100%,Data Steward -> Data Owner

@@ -2,7 +2,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from trading_ai.governance import run_governance_checks
+from trading_ai.governance import (
+    build_issue_register,
+    run_governance_checks,
+)
 
 
 def _get_check(
@@ -144,3 +147,65 @@ def test_project_dataset_produces_expected_governance_results():
 
     assert vwap_price["status"] == "PASS"
     assert vwap_price["passed_rows"] == 239
+
+
+def test_issue_register_contains_only_failed_controls():
+    df = _valid_test_dataframe()
+
+    df.loc[0, "executed_qty"] = 150
+    df.loc[0, "order_qty"] = 100
+
+    quality_report = run_governance_checks(df)
+    issue_register = build_issue_register(quality_report)
+
+    assert len(issue_register) == 1
+    assert issue_register.iloc[0]["field"] == "executed_qty"
+
+
+def test_high_severity_issue_requires_escalation():
+    df = _valid_test_dataframe()
+
+    df.loc[1, "trade_id"] = "T1"
+
+    quality_report = run_governance_checks(df)
+    issue_register = build_issue_register(quality_report)
+
+    issue = issue_register.iloc[0]
+
+    assert issue["severity"] == "High"
+    assert issue["escalation_required"] == "YES"
+
+
+def test_issue_register_does_not_invent_root_cause():
+    df = _valid_test_dataframe()
+
+    df.loc[0, "executed_qty"] = 150
+    df.loc[0, "order_qty"] = 100
+
+    quality_report = run_governance_checks(df)
+    issue_register = build_issue_register(quality_report)
+
+    issue = issue_register.iloc[0]
+
+    assert issue["root_cause"] == "To be investigated"
+    assert issue["status"] == "OPEN"
+
+
+def test_project_dataset_produces_two_governance_issues():
+    project_root = Path(__file__).resolve().parents[1]
+    data_path = project_root / "data" / "synthetic_trades.csv"
+
+    df = pd.read_csv(data_path)
+
+    quality_report = run_governance_checks(df)
+    issue_register = build_issue_register(quality_report)
+
+    assert len(issue_register) == 2
+
+    assert set(issue_register["field"]) == {
+        "trade_id",
+        "executed_qty",
+    }
+
+    assert (issue_register["status"] == "OPEN").all()
+    assert (issue_register["escalation_required"] == "YES").all()

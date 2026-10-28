@@ -1,0 +1,10 @@
+field,rule,passed_rows,total_rows,pass_rate,threshold,status
+trade_id,Trade ID must be present,240,240,1.0,1.0,PASS
+trade_id,Trade ID must be unique,238,240,0.9917,1.0,FAIL
+side,Side must be BUY or SELL,240,240,1.0,1.0,PASS
+order_qty,Order quantity must be positive,240,240,1.0,1.0,PASS
+executed_qty,Executed quantity must be between 0 and order quantity,239,240,0.9958,1.0,FAIL
+arrival_price,Arrival price must be present and positive,239,240,0.9958,0.99,PASS
+vwap_price,VWAP price must be present and positive,239,240,0.9958,0.98,PASS
+venue,Venue must be present,240,240,1.0,0.99,PASS
+asset_class,Asset class must belong to the approved list,240,240,1.0,1.0,PASS

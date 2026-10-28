@@ -1,0 +1,9 @@
+field_name,business_definition,criticality,quality_rule,threshold,example_owner
+trade_id,Unique identifier for each trade,Critical,Must be present and unique,100%,Trading Operations
+side,Direction of the trade,Critical,Must be BUY or SELL,100%,Trading
+order_qty,Original ordered quantity,Critical,Must be positive,100%,Trading
+executed_qty,Executed quantity,Critical,Must be between 0 and order quantity,100%,Trading Operations
+arrival_price,Market reference price at order arrival,Critical,Must be positive when execution slippage is calculated,99%,Market Data
+vwap_price,Volume-weighted average price benchmark,Important,Must be present and positive when required for benchmark analysis,98%,Market Data
+venue,Execution venue,Important,Must belong to approved venue list,99%,Trading Operations
+asset_class,Instrument asset class,Important,Must belong to approved asset-class list,100%,Product Data

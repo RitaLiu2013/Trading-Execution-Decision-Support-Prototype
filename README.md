@@ -246,3 +246,23 @@ Spread, volatility, participation rate, venue and asset class influence the synt
 ## Interview-ready summary
 
 > I built a small trading-execution decision-support prototype that separates deterministic quantitative analysis from generative AI. The system validates synthetic trade data, calculates sign-adjusted execution metrics, routes structured questions to Python tools, uses RAG for domain-knowledge questions, and evaluates failures at the data, retrieval, routing and generation layers. I intentionally included data-quality traps and an extreme-but-valid observation to distinguish control failures from legitimate execution outcomes.
+
+
+
+## Markets Data Governance Extension
+
+The project includes a lightweight Markets data-governance layer that
+identifies selected Critical Data Attributes (CDAs), documents their
+business meaning and expected ownership, and applies explicit data-quality
+rules and thresholds.
+
+A simple data-lineage view connects the synthetic source data to validation,
+analytics and downstream outputs.
+
+The governance quality report shows the field being controlled, the rule
+applied, the observed pass rate, the required threshold and whether the
+control passes or fails.
+
+The purpose is not to reproduce an enterprise governance platform, but to
+demonstrate how critical Markets data can be defined, monitored and controlled
+in a transparent and auditable way.

@@ -231,3 +231,47 @@ def build_issue_register(
         )
 
     return pd.DataFrame(issues)
+
+# LLM allowed evidence boundary
+def build_governance_evidence(
+    issue_row: pd.Series,
+    cda_registry: pd.DataFrame,
+) -> dict:
+    """
+    Combine one deterministic governance issue with its CDA metadata.
+
+    The returned dictionary is the authoritative evidence package that may
+    be supplied to the LLM. The LLM must not change these facts.
+    """
+    field = str(issue_row["field"])
+
+    matches = cda_registry[
+        cda_registry["field_name"] == field
+    ]
+
+    if len(matches) != 1:
+        raise ValueError(
+            f"Expected exactly one CDA registry row for field '{field}', "
+            f"found {len(matches)}."
+        )
+
+    cda = matches.iloc[0]
+
+    return {
+        "issue_id": str(issue_row["issue_id"]),
+        "field": field,
+        "rule": str(issue_row["rule"]),
+        "observed_pass_rate": float(issue_row["observed_pass_rate"]),
+        "threshold": float(issue_row["threshold"]),
+        "severity": str(issue_row["severity"]),
+        "status": str(issue_row["status"]),
+        "root_cause": str(issue_row["root_cause"]),
+        "remediation_action": str(issue_row["remediation_action"]),
+        "escalation_required": str(issue_row["escalation_required"]),
+        "data_owner_role": str(issue_row["data_owner_role"]),
+        "data_steward_role": str(issue_row["data_steward_role"]),
+        "business_definition": str(cda["business_definition"]),
+        "business_process": str(cda["business_process"]),
+        "criticality": str(cda["criticality"]),
+        "downstream_use": str(cda["downstream_use"]),
+    }
